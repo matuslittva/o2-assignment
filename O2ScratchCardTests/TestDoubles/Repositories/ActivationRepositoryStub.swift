@@ -2,13 +2,13 @@
 
 struct ActivationRepositoryStub: ActivationRepository {
     enum Outcome: Sendable {
-        case version(String)
+        case version(Version)
         case failure
     }
 
     let outcome: Outcome
 
-    func activationVersion(for code: String) async throws -> String {
+    func activationVersion(for code: String) async throws -> Version {
         switch outcome {
         case let .version(version):
             version

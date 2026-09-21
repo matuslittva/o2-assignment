@@ -1,4 +1,6 @@
 struct ActivateScratchCardUseCase: Sendable {
+    private static let requiredVersion = Version(major: 6, minor: 1, patch: 0)
+
     private let cardRepository: any ScratchCardRepository
     private let activationRepository: any ActivationRepository
 
@@ -17,11 +19,8 @@ struct ActivateScratchCardUseCase: Sendable {
             throw ActivationError.cardIsNotScratched
         }
 
-        let versionValue = try await activationRepository.activationVersion(for: code)
-        guard let version = Double(versionValue) else {
-            throw ActivationError.invalidVersion
-        }
-        guard version > 6.1 else {
+        let version = try await activationRepository.activationVersion(for: code)
+        guard version > Self.requiredVersion else {
             throw ActivationError.versionNotSupported
         }
 
