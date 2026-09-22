@@ -47,6 +47,9 @@ struct ScratchView: View {
             }
         }
         .appAlert($viewModel.alertState)
+        .sensoryFeedback(.success, trigger: viewModel.card.state) { oldState, newState in
+            oldState != newState
+        }
         .task(id: shouldScratch) {
             guard shouldScratch else { return }
             await viewModel.scratch()

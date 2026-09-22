@@ -50,6 +50,7 @@ struct ScratchCardView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(title)
                     .font(.title2.bold())
+                    .contentTransition(.opacity)
 
                 if let code {
                     Text(code)
@@ -57,10 +58,12 @@ struct ScratchCardView: View {
                         .textSelection(.enabled)
                         .lineLimit(1)
                         .minimumScaleFactor(0.65)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 } else {
                     Text("Your activation code is hidden")
                         .font(.subheadline)
                         .foregroundStyle(.white.opacity(0.8))
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
         }
@@ -78,6 +81,7 @@ struct ScratchCardView: View {
                 )
         }
         .shadow(color: .indigo.opacity(0.2), radius: 18, y: 10)
+        .animation(.snappy(duration: 0.35), value: state)
         .accessibilityElement(children: .combine)
     }
 }

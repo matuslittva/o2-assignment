@@ -55,5 +55,8 @@ struct ActivationView: View {
             }
         }
         .appAlert($viewModel.alertState)
+        .sensoryFeedback(.success, trigger: viewModel.card.state) { oldState, newState in
+            oldState != newState
+        }
     }
 }
