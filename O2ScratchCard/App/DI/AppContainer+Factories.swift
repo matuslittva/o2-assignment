@@ -17,6 +17,13 @@ extension AppContainer {
         )
     }
 
+    func makeActivateScratchCardUseCase() -> ActivateScratchCardUseCase {
+        ActivateScratchCardUseCase(
+            cardRepository: cardRepository,
+            activationRepository: activationRepository
+        )
+    }
+
     func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             card: ScratchCard(state: .unscratched),
@@ -47,4 +54,26 @@ extension AppContainer {
         )
     }
 
+    func makeActivationViewModel(
+        card: ScratchCard,
+        onCardChanged: @escaping @MainActor (ScratchCard) -> Void
+    ) -> ActivationViewModel {
+        ActivationViewModel(
+            card: card,
+            activateScratchCard: self.makeActivateScratchCardUseCase(),
+            onCardChanged: onCardChanged
+        )
+    }
+
+    func makeActivationView(
+        card: ScratchCard,
+        onCardChanged: @escaping @MainActor (ScratchCard) -> Void
+    ) -> ActivationView {
+        ActivationView(
+            viewModel: self.makeActivationViewModel(
+                card: card,
+                onCardChanged: onCardChanged
+            )
+        )
+    }
 }

@@ -4,6 +4,7 @@ struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
 
     let onScratchCard: @MainActor () -> Void
+    let onActivateCard: @MainActor () -> Void
 
     var body: some View {
         ScrollView {
@@ -21,6 +22,14 @@ struct HomeView: View {
                     isDisabled: false
                 ) {
                     onScratchCard()
+                }
+
+                SecondaryActionButton(
+                    title: "Activate card",
+                    systemImage: "bolt.fill",
+                    isDisabled: false
+                ) {
+                    onActivateCard()
                 }
             }
         }

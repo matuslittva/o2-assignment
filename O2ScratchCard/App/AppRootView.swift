@@ -16,12 +16,20 @@ struct AppRootView: View {
                 viewModel: homeViewModel,
                 onScratchCard: {
                     path.append(.scratch)
+                },
+                onActivateCard: {
+                    path.append(.activation)
                 }
             )
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
                 case .scratch:
                     container.makeScratchView(
+                        card: homeViewModel.card,
+                        onCardChanged: homeViewModel.update
+                    )
+                case .activation:
+                    container.makeActivationView(
                         card: homeViewModel.card,
                         onCardChanged: homeViewModel.update
                     )
@@ -37,5 +45,6 @@ struct AppRootView: View {
 private extension AppRootView {
     enum Destination: Hashable {
         case scratch
+        case activation
     }
 }
